@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Home from "../Screens/Home";
+import Home from "../screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
-import Data from "../Screens/Data";
+import Data from "../screens/Data";
 
 const { Screen, Navigator } = createMaterialTopTabNavigator<Tab>();
 

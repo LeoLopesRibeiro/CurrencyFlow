@@ -1,32 +1,18 @@
 export interface CurrentCoins {
-  // ask: string;
-  // bid: string;
+  ask: string;
+   bid: string;
   code: string;
-  // codein: string;
-  // create_date: string | number;
-  // high: string | number;
-  // low: string | number;
-  // name: string;
-  // pctChange: string;
-  // timestamp: string;
-  // varBid: string;
+   codein: string;
+   create_date: string | number;
+   high: string | number;
+   low: string | number;
+   name: string;
+   pctChange: string;
+   timestamp: string;
+   varBid: string;
 }
 export interface Type {
-  "USD-BRL": "Dólar Americano/Real Brasileiro";
-  "USD-BRLT": "Dólar Americano/Real Brasileiro Turismo";
-  "CAD-BRL": "Dólar Canadense/Real Brasileiro";
-  "EUR-BRL": "Euro/Real Brasileiro";
-  "GBP-BRL": "Libra Esterlina/Real Brasileiro";
-  "ARS-BRL": "Peso Argentino/Real Brasileiro";
-  "BTC-BRL": "Bitcoin/Real Brasileiro";
-  "LTC-BRL": "Litecoin/Real Brasileiro";
-  "JPY-BRL": "Iene Japonês/Real Brasileiro";
-  "CHF-BRL": "Franco Suíço/Real Brasileiro";
-  "AUD-BRL": "Dólar Australiano/Real Brasileiro";
-  "CNY-BRL": "Yuan Chinês/Real Brasileiro";
-  "ILS-BRL": "Novo Shekel Israelense/Real Brasileiro";
-  "ETH-BRL": "Ethereum/Real Brasileiro";
-  "XRP-BRL": "XRP/Real Brasileiro";
+  
   "EUR-USD": "Euro/Dólar Americano";
   "CAD-USD": "Dólar Canadense/Dólar Americano";
   "GBP-USD": "Libra Esterlina/Dólar Americano";

@@ -4,7 +4,7 @@ import TopRoutes from "./src/routes/top.routes";
 export default function App() {
   return (
     <SafeAreaView className="flex-1">
-      <TopRoutes />
+      <TopRoutes/>
       <StatusBar barStyle="light-content" />
     </SafeAreaView>
   );
