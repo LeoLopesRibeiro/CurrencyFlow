@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
-
+import { Text, View, StatusBar, SafeAreaView } from "react-native";
+import TopRoutes from "./src/routes/top.routes";
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <Text className="text-bold text-white">Open up App.js to start working on your app!!</Text>
-    </View>
+    <SafeAreaView className="flex-1">
+      <TopRoutes />
+      <StatusBar barStyle="light-content" />
+    </SafeAreaView>
   );
 }
