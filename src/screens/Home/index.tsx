@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from "react-native";
 import { api } from "../../services/api";
 import { useEffect, useState } from "react";
 import CardCoins from "../../components/CardCoins";
-import { Type } from "../../types/current";
 import {CurrentCoins} from "../../types/current";
 
 export default function Home() {

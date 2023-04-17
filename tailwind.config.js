@@ -7,7 +7,9 @@ module.exports = {
       'gray' : '#C9C9C9',
       'golden': '#B89D59',
       'blue': '#264672',
-      'gray-light' : '#BBB9B7'
+      'gray-darkness' : '#898686',
+      'green': '#85BB65',
+      'red': '#E32636',
     },
   },
   plugins: [],
