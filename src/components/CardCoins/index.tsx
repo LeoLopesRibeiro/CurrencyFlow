@@ -1,17 +1,23 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { CurrentCoins } from "../../types/current";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import { api } from "../../services/api";
+import ModalGrafico from "../ModalGrafico";
 type PropsCoin = {
   coin: CurrentCoins | null;
 };
 export default function CardCoins({ coin }: PropsCoin) {
+  const [modal, setModal] = useState(false)
   if (coin === null) return <></>;
   // console.log(coin)
 
-  console.log(new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(coin.low))
+
+  function toggleModal(){
+    setModal(!modal)
+  }
   return (
+    <TouchableOpacity onPress={toggleModal}>
+      
     <View className="flex border-gray border rounded-md py-3 px-3 w-80 mt-5 mb-5">
       <View className="flex flex-row w-full justify-between">
         <View>
@@ -40,6 +46,11 @@ export default function CardCoins({ coin }: PropsCoin) {
         <Text className="text-gray mt-2 text-right">Venda:{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumSignificantDigits: 4 }).format(coin.ask)}</Text>
       </View>
       </View>
+      <View>
+      {modal ? <ModalGrafico data={coin} visibilidade={modal} toggle={toggleModal}/> : null}
+      </View>
     </View>
+    
+    </TouchableOpacity>
   );
 }

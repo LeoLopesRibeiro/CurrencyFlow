@@ -13,7 +13,7 @@ export default function Home() {
       try {
         const response = await api.get("last/USD-BRL,EUR-BRL,USD-BRLT,GBP-BRL,ARS-BRL,BTC-BRL,LTC-BRL,JPY-BRL,CHF-BRL,AUD-BRL,CNY-BRL,ILS-BRL,ETH-BRL,XRP-BRL");
         // console.log(response.data.USDBRL.ask);
-        console.log(response.data)
+        // console.log(response.data)
         setDados(response.data);
       } catch (error) {
         console.log(error);
