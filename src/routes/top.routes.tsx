@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Home from "../screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
-import Data from "../screens/Data";
+import Salvos from "../screens/Salvos";
 
 const { Screen, Navigator } = createMaterialTopTabNavigator<Tab>();
 
@@ -10,7 +10,7 @@ export default function TopRoutes() {
     <NavigationContainer>
       <Navigator>
         <Screen name="Home" component={Home} />
-        <Screen name="Data" component={Data} />
+        <Screen name="Salvos" component={Salvos} />
       </Navigator>
     </NavigationContainer>
   );

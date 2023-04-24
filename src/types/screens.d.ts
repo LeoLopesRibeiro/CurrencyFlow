@@ -1,5 +1,5 @@
 type Tab ={
     Home: undefined,
-    Data : undefined,
+    Salvos : undefined,
 }
 type propsTab = nati
