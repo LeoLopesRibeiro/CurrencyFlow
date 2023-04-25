@@ -57,11 +57,16 @@ export default function Home() {
       <View className="flex flex-col bg-cores items-center justify-center align-middle w-max h-max">
         {nomes != null ? (
           <SelectList
+            boxStyles={{ marginTop: 20, borderColor: "#B89D59",}}
+            inputStyles={{width: "70%", color: "#C9C9C9"}}
             data={nomes}
             setSelected={(val: string) => setSelect(val)}
+            dropdownTextStyles={{color: "#C9C9C9"}}
+            dropdownStyles={{
+              borderColor: "#B89D59",
+            }}
           />
         ) : null}
-        {}
         {dados === null ? (
           <View></View>
         ) : (
