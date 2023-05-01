@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { CurrentCoins } from "../../types/current";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import ModalGrafico from "../ModalGrafico";
