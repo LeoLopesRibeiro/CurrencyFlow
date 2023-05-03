@@ -8,6 +8,9 @@ type PropsCoin = {
   coin: CurrentCoins | null;
 };
 export default function CardCoins({ coin }: PropsCoin) {
+
+
+
   const [modal, setModal] = useState(false)
   if (coin === null) return <></>;
   // console.log(coin)

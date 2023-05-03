@@ -11,7 +11,7 @@ export default function Home() {
   const [moedaUnica, setMoedaUnica] = useState<{
     [codigo: string]: CurrentCoins;
   } | null>(null);
-  const [select, setSelect] = useState(NaN);
+  const [select, setSelect] = useState<number | null>(null);
   const [nomes, setNomes] = useState<{ key: number; value: string }[] | null>(
     null
   );
@@ -59,7 +59,7 @@ export default function Home() {
 
     async function getMoedaUnica() {
       setMoedaUnica(null);
-      if (!Number.isNaN(select)) {
+      if (select != null) {
         try {
           const response = await api.get(`last/${Object.keys(search)[select]}`);
           setCodigo(Object.keys(response.data)[0]);
@@ -69,7 +69,7 @@ export default function Home() {
           console.log(error);
         }
       } else {
-        console.log("nada");
+        console.log("Escolha uma moeda");
       }
     }
     getMoedaUnica();
