@@ -1,9 +1,11 @@
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import Modal from "react-native-modal";
+import { LineChart } from "react-native-chart-kit";
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
 import { api } from "../../services/api";
 import moment from "moment";
+import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
 import { CurrentCoins } from "../../types/current";
 interface PropsType {
   visibilidade: boolean;
@@ -16,10 +18,9 @@ export default function ModalGrafico({
   toggle,
   data,
 }: PropsType) {
-  const [dataGrafico, setDataGrafico] = useState<
-    { x: string | number; y: string | number }[] | null
+  const [dataGrafico, setDataGrafico] = useState<LineChartData | null
   >(null);
-  const dataAnterior = moment().subtract(8, "days").calendar();
+  const dataAnterior = moment().subtract(7, "days").calendar();
   const datahj = moment().format("YYYYMMDD");
 
   const dataAnteriorFormatada = dataAnterior.split("/");
@@ -32,17 +33,17 @@ export default function ModalGrafico({
     async function getData() {
       try {
         const response = await api.get(
-          `/${data.code}-${data.codein}/8?start_date=${dataAnteriorFormatada[2]}${dataAnteriorFormatada[0]}${dataAnteriorFormatada[1]}&end_date=${datahj}`
+          `/${data.code}-${data.codein}/7?start_date=${dataAnteriorFormatada[2]}${dataAnteriorFormatada[0]}${dataAnteriorFormatada[1]}&end_date=${datahj}`
         );
-        console.log(response.data);
-        const dataGraficoLocal: any = [];
+        console.log( `/${data.code}-${data.codein}/7?start_date=${dataAnteriorFormatada[2]}${dataAnteriorFormatada[0]}${dataAnteriorFormatada[1]}&end_date=${datahj}`);
+        const dataGraficoLocal: any = { labels: [], datasets: [{ data: [],  }] };
         response.data.forEach((item: any, index: any) => {
-          dataGraficoLocal.push({
-            x:  moment(response.data[0].create_date)
-            .subtract(index, "days")
-            .format("DD/MM"),
-            y: Number(item.bid),
-          });
+          dataGraficoLocal.labels.push(
+            moment(response.data[0].create_date)
+              .subtract(index, "days")
+              .format("DD/MM")
+          );
+          dataGraficoLocal.datasets[0].data.push(Number(item.bid))
         });
         setDataGrafico(dataGraficoLocal);
       } catch (error) {
@@ -52,30 +53,51 @@ export default function ModalGrafico({
     getData();
   }, []);
   return (
-    <ScrollView>
-      <Modal isVisible={visibilidade}>
-        <View className=" bg-gray w-full">
-          <TouchableOpacity onPress={toggle}>
-            <Text className="">Nada</Text>
-            {dataGrafico != null && (
-              <VictoryChart theme={VictoryTheme.material} domainPadding={10} >
-                <VictoryLine
-                width={20}
-                animate={{
-                  duration: 2000,
-                  onLoad: { duration: 1000 }
-                }}
-                  style={{
-                    data: { stroke: "#B89D59", },
-                    parent: {},
-                    
-                  }}
-                  data={dataGrafico}
-                />
-              </VictoryChart>
+    <ScrollView> 
+      <Modal isVisible={visibilidade} className="m-2 w-full flex justify-evenly">
+        <View className="w-full m-0">
+     
+        {dataGrafico != null && (
+              <LineChart
+              data={dataGrafico}
+              width={Dimensions.get('window').width - 15} // from react-native
+              height={300}
+              yAxisLabel={'R$'} 
+              yLabelsOffset={5}
+              
+              chartConfig={{
+                // backgroundColor: '#1cc910',
+                backgroundGradientFrom: '#1C1C1C',
+                backgroundGradientTo: '#1C1C1C',
+               fillShadowGradient: "#C9C9C9",
+               fillShadowGradientFromOffset: 1,
+                decimalPlaces: 3, // optional, defaults to 2dp
+                color: (opacity = 1) => `rgba(184, 157, 89, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                // propsForDots:{
+                //   r: "4",
+                //   strokeWidth: "2",
+                //   stroke: "#B89D59"
+                // }
+              }}
+              bezier
+              style={{
+                paddingTop: 30,
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+            />
+             
             )}
-          </TouchableOpacity>
+         
         </View>
+        <TouchableOpacity onPress={toggle} className=" w-full flex items-center border rounded-md r">
+            <Text className=" text-golden">X</Text>
+           
+          </TouchableOpacity>
       </Modal>
     </ScrollView>
   );
