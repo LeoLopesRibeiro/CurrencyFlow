@@ -5,6 +5,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import ModalLoading from "../../components/ModalLoading";
 import { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import Modal from "react-native-modal";
@@ -13,6 +14,7 @@ import { api } from "../../services/api";
 import moment from "moment";
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
 import { CurrentCoins, DataType } from "../../types/current";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 interface PropsType {
   visibilidade: boolean;
   data: CurrentCoins;
@@ -25,6 +27,7 @@ export default function ModalGrafico({
   data,
 }: PropsType) {
   const [dataGrafico, setDataGrafico] = useState<LineChartData | null>(null);
+  const [coracao, setCoracao] = useState(false);
   const dataAnterior = moment().subtract(7, "days").calendar();
   const datahj = moment().format("YYYYMMDD");
 
@@ -51,18 +54,65 @@ export default function ModalGrafico({
           dataGraficoLocal.datasets[0].data.push(Number(item.bid));
         });
         dataGraficoLocal.labels.reverse();
-        console.log(dataGraficoLocal.datasets[0].data);
         setDataGrafico(dataGraficoLocal);
       } catch (error) {
         console.log(error);
       }
     }
     getData();
+
+    async function getCoin() {
+      try {
+        const coinData = await AsyncStorage.getItem("coin");
+        // console.log("Eta ", coinData);
+        if (coinData) {
+          const split = coinData.split(",");
+          if (split.includes(`${data.code}-${data.codein}`)) {
+            setCoracao(!coracao);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getCoin();
   }, []);
+
+  async function saveCoin() {
+    try {
+      const coinData = await AsyncStorage.getItem("coin");
+      let split = coinData?.split(",");
+      // console.log(coinData)
+      if (split?.includes(`${data.code}-${data.codein}`)) {
+        const index = split.indexOf(`${data.code}-${data.codein}`);
+        console.log(index);
+        split.splice(index, 1);
+
+        const newString = split.join(",");
+        // console.log("Boa", newString);
+        const novasMoedas = AsyncStorage.setItem("coin", `${newString}`);
+        setCoracao(!coracao);
+      } else {
+        if (coinData === null) {
+          AsyncStorage.setItem("coin", `${data.code}-${data.codein}`);
+          setCoracao(!coracao);
+        } else {
+          AsyncStorage.setItem(
+            "coin",
+            `${coinData},${data.code}-${data.codein}`
+          );
+          // console.log("salvo");
+          setCoracao(!coracao);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <ScrollView>
       <Modal isVisible={visibilidade} className="m-2 w-full flex">
-        <View className="flex bg-cores right-2 m-2 rounded-md">
+        <View className="flex border-gray border bg-cores right-2 m-5 rounded-md">
           <View className="flex flex-row justify-between">
             <TouchableOpacity
               onPress={toggle}
@@ -75,9 +125,21 @@ export default function ModalGrafico({
                 color="#C9C9C9"
               />
             </TouchableOpacity>
-            <TouchableOpacity className="w-min flex items-end right-5 top-3">
-              <AntDesign name="hearto" size={24} color="#C9C9C9" />
-            </TouchableOpacity>
+            {coracao ? (
+              <TouchableOpacity
+                className="w-min flex items-end right-5 top-3"
+                onPress={saveCoin}
+              >
+                <AntDesign name="heart" size={24} color="#B89D59" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                className="w-min flex items-end right-5 top-3"
+                onPress={saveCoin}
+              >
+                <AntDesign name="hearto" size={24} color="#C9C9C9" />
+              </TouchableOpacity>
+            )}
           </View>
           <Text className="text-gray font-bold border-b border-golden top-5 text-center my-3">
             {data.name}
@@ -86,7 +148,7 @@ export default function ModalGrafico({
             {dataGrafico != null ? (
               <LineChart
                 data={dataGrafico}
-                width={Dimensions.get("window").width - 15} // from react-native
+                width={Dimensions.get("window").width - 45} // from react-native
                 height={300}
                 yAxisLabel={"R$"}
                 // yLabelsOffset={-10}
@@ -122,7 +184,11 @@ export default function ModalGrafico({
                   borderRadius: 16,
                 }}
               />
-            ) : null}
+            ) : (
+              <View className="flex h-20 items-center justify-center">
+                <ModalLoading />
+              </View>
+            )}
           </View>
         </View>
       </Modal>
