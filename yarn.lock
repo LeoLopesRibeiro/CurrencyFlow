@@ -3258,6 +3258,11 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
 
+eas@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eas/-/eas-0.1.0.tgz#cc3c1d8f1aa9439a873670440cf946af1c5707b4"
+  integrity sha512-w88fTTTkfDLHwcaVW8wiYjOtnBBToguzc6AyIldD1vOrCRTKxhQEDS8oIE7nWeSJ+kCoIeoHd79Mhwvntydixg==
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"

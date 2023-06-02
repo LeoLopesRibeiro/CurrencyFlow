@@ -82,7 +82,7 @@ export default function ModalGrafico({
     try {
       const coinData = await AsyncStorage.getItem("coin");
       let split = coinData?.split(",");
-      // console.log(coinData)
+      console.log("Legal" ,coinData)
       if (split?.includes(`${data.code}-${data.codein}`)) {
         const index = split.indexOf(`${data.code}-${data.codein}`);
         console.log(index);

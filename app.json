@@ -1,15 +1,15 @@
 {
   "expo": {
     "name": "CurrencyFlow",
-    "slug": "CurrencyFlow",
-    "version": "1.0.0",
+    "slug": "currencyflow",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#EDE9DD"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -20,11 +20,17 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#EDE9DD"
+      },
+      "package": "com.leolopes05.currencyflow"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "863544f1-e294-4f77-a405-bead63e69b64"
+      }
     }
   }
 }
